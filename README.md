@@ -13,8 +13,10 @@ This repository contains coursework and assignments for the AI & Machine Learnin
 - **Type:** Group Assignment (70% group grade + 30% individual)
 
 **Quick Links:**
-- [Interactive Playbook Guide](Assignment%232/index.html)
+- [Interactive Playbook Guide](Assignment%232/index.html) (local)
+- 🌐 **Live Site:** `https://sanjaygupta-professional.github.io/AIML/Assignment%232/` (after enabling GitHub Pages)
 - [Assignment Details](Assignment%232/README.md)
+- [📖 GitHub Pages Setup Guide](GITHUB_PAGES_SETUP.md) - Enable live website publishing
 
 ## 🎓 Course Information
 

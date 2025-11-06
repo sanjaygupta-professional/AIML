@@ -10,7 +10,9 @@ This directory contains the interactive learning tool for our group's AI/ML Algo
 
 ## 🎯 Interactive Guide
 
-**[Open the Interactive Playbook Guide](index.html)**
+### Access Options:
+- **🌐 Live Website:** https://sanjaygupta-professional.github.io/AIML/Assignment%232/ (after enabling GitHub Pages)
+- **📂 Local File:** [Open index.html](index.html) in your browser
 
 The guide includes:
 - **Overview** - Assignment statistics and quick checklist
