@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML Algorithm Playbook - Interactive Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            font-size: 0.9375rem;
+        }
+
+        .nav-item:hover {
+            background: var(--bg);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--bg);
+            border-left-color: var(--primary);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.125rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-primary { background: #dbeafe; color: var(--primary); }
+        .badge-success { background: #d1fae5; color: var(--success); }
+        .badge-warning { background: #fef3c7; color: #d97706; }
+        .badge-danger { background: #fee2e2; color: var(--danger); }
+
+        /* Algorithm Grid */
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .algorithm-card {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .algorithm-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .algorithm-card.selected {
+            border: 3px solid var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Industry Grid */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .industry-card {
+            padding: 1.25rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .industry-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .industry-card.selected {
+            border-color: var(--primary);
+            background: #dbeafe;
+        }
+
+        /* Accordion */
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            background: var(--bg);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: #f1f5f9;
+        }
+
+        .accordion-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .accordion-icon {
+            transition: transform 0.2s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            background: var(--card-bg);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        tr:hover {
+            background: var(--bg);
+        }
+
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .comparison-item {
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+        }
+
+        .comparison-item.good {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .comparison-item.bad {
+            border-color: var(--danger);
+            background: #fef2f2;
+        }
+
+        .comparison-item h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-item.good h3 { color: var(--success); }
+        .comparison-item.bad h3 { color: var(--danger); }
+
+        .example-text {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+            line-height: 1.8;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .bullet-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .bullet-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: var(--border);
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.3s;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: var(--bg);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-color: var(--warning);
+            color: #92400e;
+        }
+
+        /* Button */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .timeline-item {
+            padding-left: 2.5rem;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: 0.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+
+        .timeline-item:after {
+            content: "";
+            position: absolute;
+            left: 0.9375rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: var(--border);
+        }
+
+        .timeline-item:last-child:after {
+            display: none;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .algorithm-grid,
+            .industry-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        /* Matrix Table */
+        .matrix-table {
+            overflow-x: auto;
+        }
+
+        .matrix-table table {
+            min-width: 600px;
+        }
+
+        .editable-cell {
+            background: #fefce8;
+            cursor: text;
+            min-width: 100px;
+        }
+
+        .editable-cell:hover {
+            background: #fef9c3;
+        }
+
+        /* Section Number Badge */
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>AI/ML Playbook</h1>
+                <p>GGU PhD - Group Assignment Guide</p>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="showSection('overview')">Overview</div>
+                <div class="nav-item" onclick="showSection('objectives')">Learning Objectives</div>
+                <div class="nav-item" onclick="showSection('selection')">Industry & Algorithm Selection</div>
+                <div class="nav-item" onclick="showSection('deliverables')">Deliverables</div>
+                <div class="nav-item" onclick="showSection('structure')">Report Structure</div>
+                <div class="nav-item" onclick="showSection('rubric')">Assessment Rubric</div>
+                <div class="nav-item" onclick="showSection('examples')">Good vs Weak Examples</div>
+                <div class="nav-item" onclick="showSection('roles')">Roles & Contribution</div>
+                <div class="nav-item" onclick="showSection('timeline')">Timeline Planner</div>
+                <div class="nav-item" onclick="showSection('genai')">GenAI Usage Policy</div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="section active">
+                <div class="section-header">
+                    <h2>Assignment Overview</h2>
+                    <p>Create an AI/ML Algorithm Playbook for your chosen industry</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">10-15</div>
+                        <div class="stat-label">Pages Report</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">70%</div>
+                        <div class="stat-label">Group Grade</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30%</div>
+                        <div class="stat-label">Individual Grade</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">10</div>
+                        <div class="stat-label">ML Algorithms</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Purpose & Context</h3>
+                        <span class="badge badge-primary">Executive Level</span>
+                    </div>
+                    <p style="margin-bottom: 1rem;">As senior leaders, your focus is NOT on tuning hyperparameters but on:</p>
+                    <ul class="bullet-list">
+                        <li>Identifying high-value business problems</li>
+                        <li>Matching problems to appropriate AI/ML algorithms</li>
+                        <li>Evaluating risks, KPIs, and governance implications</li>
+                        <li>Creating actionable playbooks for your industry</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quick Start Checklist</h3>
+                    </div>
+                    <ul class="checklist">
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check1">
+                            <label for="check1">Select your industry as a group</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check2">
+                            <label for="check2">Each member selects a unique algorithm</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check3">
+                            <label for="check3">Research real-world use cases for your algorithm</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check4">
+                            <label for="check4">Document business problems and KPIs</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check5">
+                            <label for="check5">Write individual sections (1 page per algorithm)</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check6">
+                            <label for="check6">Complete individual reflection notes (1-2 pages)</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check7">
+                            <label for="check7">Compile group report with all sections</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check8">
+                            <label for="check8">Create contribution matrix</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check9">
+                            <label for="check9">Add 8-10 credible references</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="check10">
+                            <label for="check10">Submit as single PDF (30 min before deadline)</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Deadline:</strong> 26 Nov '25, 11:59 PM (IST) - Submit at least 30 minutes before!
+                </div>
+            </section>
+
+            <!-- Learning Objectives Section -->
+            <section id="objectives" class="section">
+                <div class="section-header">
+                    <h2>Learning Objectives</h2>
+                    <p>What you'll demonstrate in this assignment</p>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3><span class="section-number">1</span>Map Business Problems to Algorithms</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>What this means:</strong> Connect real business challenges to specific ML algorithms from the course.</p>
+                                <p style="margin-top: 1rem;"><strong>Example:</strong> Credit card fraud detection → Logistic Regression or Random Forest (classification problem)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3><span class="section-number">2</span>Explain Algorithm Fit</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>You must justify WHY an algorithm fits based on:</strong></p>
+                                <ul class="bullet-list">
+                                    <li><strong>Data type:</strong> Numerical, categorical, time-series, etc.</li>
+                                    <li><strong>Problem type:</strong> Supervised (classification/regression), unsupervised (clustering), time-series forecasting</li>
+                                    <li><strong>Interpretability:</strong> Can executives understand the model's decisions?</li>
+                                    <li><strong>Bias-variance profile:</strong> Trade-off between model complexity and generalization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3><span class="section-number">3</span>Link to Business KPIs</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>Examples of Business KPIs:</strong></p>
+                                <ul class="bullet-list">
+                                    <li><strong>Revenue:</strong> Increase in sales, customer lifetime value</li>
+                                    <li><strong>Cost:</strong> Reduction in operational costs, fraud losses</li>
+                                    <li><strong>Risk:</strong> Default rates, NPL%, expected loss</li>
+                                    <li><strong>Customer metrics:</strong> Churn rate, conversion rate, satisfaction scores</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3><span class="section-number">4</span>Describe Evaluation Metrics</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>Choose appropriate metrics for your algorithm:</strong></p>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Problem Type</th>
+                                            <th>Metrics</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Classification</td>
+                                            <td>Confusion Matrix, Precision, Recall, F1-Score, ROC-AUC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regression</td>
+                                            <td>RMSE, MAE, R², MAPE</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Time Series</td>
+                                            <td>MAPE, RMSE, MAE (for ARIMA)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Clustering</td>
+                                            <td>Silhouette Score, Within-cluster variance, Business validation</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3><span class="section-number">5</span>Discuss Risks & Governance</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul class="bullet-list">
+                                    <li><strong>Overfitting/Underfitting:</strong> How to detect and prevent</li>
+                                    <li><strong>Data quality:</strong> Missing values, outliers, bias in training data</li>
+                                    <li><strong>Model drift:</strong> Performance degradation over time</li>
+                                    <li><strong>Ethical concerns:</strong> Fairness across protected groups</li>
+                                    <li><strong>Regulatory compliance:</strong> Explainability requirements</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Selection Section -->
+            <section id="selection" class="section">
+                <div class="section-header">
+                    <h2>Industry & Algorithm Selection</h2>
+                    <p>Choose wisely - this shapes your entire playbook</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Step 1: Choose Your Industry</h3>
+                        <span class="badge badge-warning">Group Decision</span>
+                    </div>
+                    <p style="margin-bottom: 1rem;">Select ONE industry that your entire group will focus on:</p>
+
+                    <div class="industry-grid">
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏦</div>
+                            <strong>Banking / Financial Services</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛡️</div>
+                            <strong>Insurance</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛒</div>
+                            <strong>Retail / e-Commerce</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚕️</div>
+                            <strong>Healthcare / Pharma</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📱</div>
+                            <strong>Telecom</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏭</div>
+                            <strong>Manufacturing</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
+                            <strong>Logistics / Supply Chain</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                            <strong>Energy / Utilities</strong>
+                        </div>
+                        <div class="industry-card" onclick="selectIndustry(this)">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏛️</div>
+                            <strong>Public Sector / Smart Cities</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Step 2: Each Member Selects ONE Algorithm</h3>
+                        <span class="badge badge-danger">Must be unique</span>
+                    </div>
+                    <p style="margin-bottom: 1rem;">Click to select your algorithm (max 5 group members shown):</p>
+
+                    <div class="algorithm-grid">
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Linear Regression</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Continuous prediction</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Logistic Regression</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Binary classification</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Decision Trees</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Rule-based decisions</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">KNN</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Nearest neighbors</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Apriori Algorithm</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Association rules</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">K-Means Clustering</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Customer segments</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Hierarchical Clustering</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Dendrogram-based</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">AdaBoost</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Boosting ensemble</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Random Forests</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Bagging ensemble</div>
+                        </div>
+                        <div class="algorithm-card" onclick="selectAlgorithm(this)">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">ARIMA</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Time series forecast</div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" style="margin-top: 1.5rem;">
+                        <strong>Pro Tip:</strong> Choose algorithms that complement each other! For example, if one member picks K-Means for customer segmentation, another could pick Apriori for recommendation within those segments.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deliverables Section -->
+            <section id="deliverables" class="section">
+                <div class="section-header">
+                    <h2>Deliverables</h2>
+                    <p>What you need to submit</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">1. Group Report (10-15 pages)</h3>
+                        <span class="badge badge-primary">70% of grade</span>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Section</th>
+                                <th>Length</th>
+                                <th>Key Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Executive Summary</strong></td>
+                                <td>1 page</td>
+                                <td>Industry, key problems, algorithm mapping overview</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Industry & Data Landscape</strong></td>
+                                <td>1-2 pages</td>
+                                <td>Industry overview, data sources, value levers</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Algorithm Playbook</strong></td>
+                                <td>6-9 pages</td>
+                                <td>~1 page per algorithm with use case, KPIs, metrics, validation, limitations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cross-Algorithm Comparison</strong></td>
+                                <td>1-2 pages</td>
+                                <td>Comparative tables, when to use what, trade-offs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>References & Appendices</strong></td>
+                                <td>Variable</td>
+                                <td>8-10 credible sources, contribution matrix</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">2. Individual Reflection Notes</h3>
+                        <span class="badge badge-success">30% of grade</span>
+                    </div>
+                    <p style="margin-bottom: 1rem;"><strong>Each member writes 1-2 pages covering:</strong></p>
+                    <ul class="bullet-list">
+                        <li>Description of the algorithm you owned</li>
+                        <li>What you learned about using it in real business scenarios</li>
+                        <li>How you would apply it in your own organization</li>
+                        <li>Reflections on evaluation, bias-variance trade-offs, limitations</li>
+                    </ul>
+                    <div class="alert alert-warning" style="margin-top: 1rem;">
+                        <strong>Important:</strong> Attach as appendix in the group report - one appendix section per student
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Submission Requirements</h3>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><strong>Single submission per group</strong> - only one member submits</li>
+                        <li><strong>PDF format only</strong> - other formats not accepted</li>
+                        <li><strong>Multiple files?</strong> Upload to shared drive (public access), provide link in PDF</li>
+                        <li><strong>No changes after submission</strong> - contact support before deadline if needed</li>
+                        <li><strong>Submit 30 minutes before deadline</strong> - recommended best practice</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Report Structure Section -->
+            <section id="structure" class="section">
+                <div class="section-header">
+                    <h2>Report Structure</h2>
+                    <p>Detailed breakdown of each section</p>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>Executive Summary (1 page)</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>Purpose:</strong> Give busy executives a 1-page overview of your entire playbook</p>
+                                <p style="margin-top: 1rem;"><strong>What to include:</strong></p>
+                                <ul class="bullet-list">
+                                    <li>Which industry you selected and why it's important</li>
+                                    <li>Top 3-5 business problems you're addressing</li>
+                                    <li>Quick mapping: which algorithms solve which problems</li>
+                                    <li>Expected business impact (in KPI terms)</li>
+                                </ul>
+                                <div class="alert alert-info" style="margin-top: 1rem;">
+                                    <strong>Write this last!</strong> Even though it comes first, you'll write it after completing all other sections.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>Industry & Data Landscape (1-2 pages)</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>What to cover:</strong></p>
+                                <ul class="bullet-list">
+                                    <li><strong>Industry overview:</strong> Market size, key players, current challenges</li>
+                                    <li><strong>Data sources:</strong> What data is typically available (transactional, behavioral, external, etc.)</li>
+                                    <li><strong>Value levers:</strong> Where can AI/ML create the most business value?</li>
+                                    <li><strong>Regulatory context:</strong> Any compliance or governance considerations</li>
+                                </ul>
+                                <p style="margin-top: 1rem;"><strong>Example for Banking:</strong></p>
+                                <p style="background: #f8fafc; padding: 1rem; border-radius: 4px; margin-top: 0.5rem;">
+                                    "Banks have access to rich transactional data (payments, transfers), account behavior (balances, overdrafts),
+                                    credit bureau data, and demographic information. Key value levers include reducing default rates (credit risk),
+                                    preventing fraud, personalizing product recommendations, and optimizing branch operations. Regulatory requirements
+                                    (Basel III, fair lending) demand model interpretability and bias testing."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>Algorithm Playbook Sections (~1 page each)</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>Each algorithm section MUST include:</strong></p>
+                                <table style="margin-top: 1rem;">
+                                    <thead>
+                                        <tr>
+                                            <th>Element</th>
+                                            <th>What to Include</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Business Problem</strong></td>
+                                            <td>Clear problem statement with industry context</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Data Used</strong></td>
+                                            <td>Specific variables, sources, time horizon</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Why This Algorithm</strong></td>
+                                            <td>Justify based on problem type, data type, interpretability needs</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>KPIs Impacted</strong></td>
+                                            <td>Specific business metrics (revenue, cost, risk, etc.)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Evaluation Metrics</strong></td>
+                                            <td>Technical metrics (precision, recall, RMSE, etc.) with justification</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Validation Strategy</strong></td>
+                                            <td>Train/test split, k-fold CV, time-based validation</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Limitations & Risks</strong></td>
+                                            <td>Overfitting, data quality, bias, drift, ethical concerns</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-success" style="margin-top: 1rem;">
+                                    <strong>See the "Good vs Weak Examples" section</strong> for a detailed template of what a strong algorithm section looks like!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>Cross-Algorithm Comparison (1-2 pages)</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>Create comparative insights showing:</strong></p>
+                                <ul class="bullet-list">
+                                    <li>When to use which algorithm (decision framework)</li>
+                                    <li>Trade-offs: interpretability vs. performance, speed vs. accuracy</li>
+                                    <li>Ensemble possibilities (can algorithms be combined?)</li>
+                                </ul>
+                                <p style="margin-top: 1rem;"><strong>Example Comparison Table:</strong></p>
+                                <table style="margin-top: 0.5rem;">
+                                    <thead>
+                                        <tr>
+                                            <th>Algorithm</th>
+                                            <th>Use When...</th>
+                                            <th>Avoid When...</th>
+                                            <th>Interpretability</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Logistic Regression</td>
+                                            <td>Need explainability, linear relationships</td>
+                                            <td>Complex non-linear patterns</td>
+                                            <td>High</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Random Forest</td>
+                                            <td>Non-linear, feature interactions</td>
+                                            <td>Need simple explanations</td>
+                                            <td>Medium</td>
+                                        </tr>
+                                        <tr>
+                                            <td>K-Means</td>
+                                            <td>Customer segmentation, unlabeled data</td>
+                                            <td>Categories not well-separated</td>
+                                            <td>High</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>References & Appendices</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p><strong>References (8-10 minimum):</strong></p>
+                                <ul class="bullet-list">
+                                    <li>Academic papers, industry reports, case studies</li>
+                                    <li>McKinsey, Gartner, Forrester reports acceptable</li>
+                                    <li>Company blogs/whitepapers from industry leaders</li>
+                                    <li>Use proper citation format (APA, IEEE, etc.)</li>
+                                </ul>
+                                <p style="margin-top: 1rem;"><strong>Appendices must include:</strong></p>
+                                <ul class="bullet-list">
+                                    <li><strong>Contribution Matrix</strong> (see Roles section)</li>
+                                    <li><strong>Individual Reflection Notes</strong> (1-2 pages per member)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rubric Section -->
+            <section id="rubric" class="section">
+                <div class="section-header">
+                    <h2>Assessment Rubric</h2>
+                    <p>How your work will be evaluated</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Group Component (70 points)</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Criterion</th>
+                                <th>Points</th>
+                                <th>What Evaluators Look For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Quality & Relevance of Use Cases</strong></td>
+                                <td>20</td>
+                                <td>Real or realistic cases, clearly described, strongly tied to industry, credible sources cited</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Correct Problem-to-Algorithm Mapping</strong></td>
+                                <td>10</td>
+                                <td>Demonstrates understanding of which algorithm fits which problem type (supervised/unsupervised, classification vs regression, etc.)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Evaluation & Metrics Treatment</strong></td>
+                                <td>10</td>
+                                <td>Appropriate use of confusion matrix, accuracy, precision, recall, ROC-AUC, RMSE, MAPE, etc.; correct reasoning</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bias-Variance & Model Validation</strong></td>
+                                <td>10</td>
+                                <td>Shows understanding of bias-variance tradeoff, over/underfitting, k-fold CV, train-test-validation splits, monitoring/drift</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cross-Algorithm Insights</strong></td>
+                                <td>10</td>
+                                <td>Clear comparative insights on when to use what, trade-offs in interpretability, performance, business fit</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Clarity, Structure & Communication</strong></td>
+                                <td>10</td>
+                                <td>Well-structured, concise yet rich, visually clear, appropriate for executives</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Individual Component (30 points)</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Criterion</th>
+                                <th>Points</th>
+                                <th>What Evaluators Look For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Quality of Individual Section</strong></td>
+                                <td>15</td>
+                                <td>Conceptual accuracy, depth, clarity of the algorithm owned by the student (in report body + appendix)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Individual Reflection Note</strong></td>
+                                <td>15</td>
+                                <td>Thoughtfulness, evidence of learning, linkage to own context/organization</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>Total: 100 points</strong> (70 group + 30 individual)
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quick Self-Assessment Checklist</h3>
+                    </div>
+                    <p style="margin-bottom: 1rem;">Before submitting, verify each section:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Check</th>
+                                <th>Question</th>
+                                <th>✓</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Use Cases</td>
+                                <td>Are all use cases real/realistic with credible sources?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Algorithm Fit</td>
+                                <td>Did we explain WHY each algorithm is appropriate?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Business KPIs</td>
+                                <td>Did we link each algorithm to concrete business metrics?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Metrics</td>
+                                <td>Did we use appropriate evaluation metrics (not just "accuracy")?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Validation</td>
+                                <td>Did we describe validation strategy (k-fold CV, train/test)?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Limitations</td>
+                                <td>Did we discuss overfitting, bias, data quality, drift?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Comparison</td>
+                                <td>Did we provide cross-algorithm insights and trade-offs?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Executive Level</td>
+                                <td>Is the language appropriate for senior leaders (not too technical)?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>References</td>
+                                <td>Do we have 8-10 credible sources properly cited?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Individual Work</td>
+                                <td>Did each member include their reflection note in appendix?</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Examples Section -->
+            <section id="examples" class="section">
+                <div class="section-header">
+                    <h2>Good vs Weak Examples</h2>
+                    <p>Learn from the comparison</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Example: Logistic Regression for Credit Card Default Prediction</h3>
+                    </div>
+
+                    <div class="comparison">
+                        <div class="comparison-item bad">
+                            <h3>❌ Weak Example (Avoid This)</h3>
+                            <div class="example-text">
+                                Logistic Regression is a machine learning algorithm used for classification. In our bank, we can use it to predict which customers will default on their credit cards. We will collect lots of data and train the model. If the accuracy is high, the model is good and we can use it to approve or reject customers. Logistic Regression is good because it is simple and used a lot in the industry. We will check the confusion matrix and try to reduce errors. This will help the bank reduce risk.
+                            </div>
+                            <p><strong>Issues with this example:</strong></p>
+                            <ul class="bullet-list">
+                                <li>Very generic; could be from anywhere</li>
+                                <li>No specific data variables mentioned</li>
+                                <li>Relies only on "accuracy" without class imbalance discussion</li>
+                                <li>No explicit link to business KPIs</li>
+                                <li>No regulatory/governance discussion</li>
+                                <li>No validation approach details</li>
+                            </ul>
+                        </div>
+
+                        <div class="comparison-item good">
+                            <h3>✓ Good Example (Aim for This)</h3>
+                            <div class="example-text">
+                                <p><strong>Business problem:</strong> The bank wants to reduce credit card defaults in its mass retail segment without unnecessarily rejecting profitable customers. We frame this as a binary classification problem: default within 12 months (yes/no).</p>
+
+                                <p><strong>Data:</strong> We use 3 years of historical credit card data for approved customers, including demographics (age, income band, occupation), account behavior (utilization ratio, number of late payments in last 6 and 12 months, overlimit incidents), and bureau variables (existing loans, past delinquencies). The target label is whether the customer became 90+ days past due within 12 months of card issuance.</p>
+
+                                <p><strong>Why Logistic Regression:</strong> The risk team and regulators require an interpretable model where we can explain why a customer was rejected. Logistic Regression provides clear coefficients and odds ratios, allowing us to show, for example, that high utilization and recent delinquencies significantly increase default odds. It is less prone to overfitting than complex non-linear models if we regularize appropriately and keep feature engineering disciplined.</p>
+
+                                <p><strong>KPIs and evaluation metrics:</strong> From a business perspective, we care about reducing the default rate (NPL%) and expected loss (PD × LGD × EAD), while maintaining approval rates. At the model level, overall accuracy is less meaningful because only about 5–7% of customers default. We therefore focus on recall (sensitivity) for the "default" class, precision, and the ROC curve. We use the confusion matrix to understand tradeoffs: a false negative means a defaulted customer we should have flagged; a false positive means a rejected or tightly limited customer who would have paid. We select the probability threshold based on the bank's risk appetite and cost of misclassification.</p>
+
+                                <p><strong>Validation and bias-variance:</strong> We split data into train/validation/test sets and also run stratified k-fold cross-validation to ensure the model generalizes across different time periods and customer sub-segments. Regularization (e.g., L2) helps control variance. We track performance stability over time to detect drift as economic conditions change.</p>
+
+                                <p><strong>Risks and limitations:</strong> Logistic Regression assumes a linear relationship in the log-odds space and may miss complex interactions between variables. We address this by including interaction terms where business-justified and by regularly back-testing the model. We also check for potential bias across protected groups, and we ensure that any overrides or policy rules are documented for regulatory review. If performance plateaus, we may benchmark against tree-based ensembles, but Logistic Regression remains the baseline model due to interpretability and regulatory comfort.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success" style="margin-top: 1.5rem;">
+                        <strong>Why this is a good example:</strong> Clearly states business problem, describes data in detail, explains algorithm choice with business justification, links to concrete KPIs, discusses appropriate metrics for imbalanced data, shows validation strategy, addresses governance and limitations.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Template for Your Algorithm Sections</h3>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; font-family: monospace; font-size: 0.875rem;">
+                        <strong>[Algorithm Name]</strong><br><br>
+
+                        <strong>Business Problem:</strong><br>
+                        [Clear problem statement with industry context. What business challenge are you solving?]<br><br>
+
+                        <strong>Data Used:</strong><br>
+                        [Specific variables, data sources, time horizon, data volume]<br><br>
+
+                        <strong>Why This Algorithm:</strong><br>
+                        [Justify based on: problem type (classification/regression/clustering), data characteristics, interpretability needs, bias-variance profile]<br><br>
+
+                        <strong>KPIs Impacted:</strong><br>
+                        [Specific business metrics - revenue, cost, risk, customer metrics. Quantify if possible]<br><br>
+
+                        <strong>Evaluation Metrics:</strong><br>
+                        [Technical metrics appropriate for your problem. Explain why you chose these over others]<br><br>
+
+                        <strong>Validation Strategy:</strong><br>
+                        [Train/test split, k-fold CV, time-based validation, how you prevent overfitting]<br><br>
+
+                        <strong>Risks and Limitations:</strong><br>
+                        [Overfitting/underfitting, data quality issues, bias concerns, model drift, ethical/regulatory considerations]
+                    </div>
+                </div>
+            </section>
+
+            <!-- Roles Section -->
+            <section id="roles" class="section">
+                <div class="section-header">
+                    <h2>Roles & Contribution Matrix</h2>
+                    <p>Document who did what</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Individual Responsibility</h3>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><strong>Each member is primary owner</strong> for exactly ONE algorithm</li>
+                        <li><strong>Primary owner</strong> writes first draft of that algorithm's section</li>
+                        <li><strong>Primary owner</strong> ensures strong business-grounded use case</li>
+                        <li><strong>Primary owner</strong> is accountable for correct metrics and evaluation logic</li>
+                        <li><strong>Other members</strong> may help refine and edit as secondary contributors</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Contribution Matrix Template</h3>
+                        <span class="badge badge-danger">Required in Appendix</span>
+                    </div>
+                    <p style="margin-bottom: 1rem;">Include this table in your report's appendix:</p>
+
+                    <div class="matrix-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task / Section</th>
+                                    <th>Primary Owner</th>
+                                    <th>Secondary Contributors</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Executive Summary</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td class="editable-cell" contenteditable="true">Enter names</td>
+                                </tr>
+                                <tr>
+                                    <td>Industry and Data Landscape</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td class="editable-cell" contenteditable="true">Enter names</td>
+                                </tr>
+                                <tr>
+                                    <td>Linear Regression section</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td>–</td>
+                                </tr>
+                                <tr>
+                                    <td>Logistic Regression section</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td>–</td>
+                                </tr>
+                                <tr>
+                                    <td>Decision Trees section</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td>–</td>
+                                </tr>
+                                <tr>
+                                    <td>KNN section</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td>–</td>
+                                </tr>
+                                <tr>
+                                    <td>Apriori Algorithm section</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td>–</td>
+                                </tr>
+                                <tr>
+                                    <td>K-Means Clustering section</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td>–</td>
+                                </tr>
+                                <tr>
+                                    <td>Cross-Algorithm Comparison</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td class="editable-cell" contenteditable="true">All members</td>
+                                </tr>
+                                <tr>
+                                    <td>References & Citations</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td class="editable-cell" contenteditable="true">Enter names</td>
+                                </tr>
+                                <tr>
+                                    <td>Final Review & Editing</td>
+                                    <td class="editable-cell" contenteditable="true">Enter name</td>
+                                    <td class="editable-cell" contenteditable="true">All members</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert alert-info" style="margin-top: 1rem;">
+                        <strong>Note:</strong> The cells highlighted in yellow are editable. Click to customize with your team members' names.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Your Group Members</h3>
+                    </div>
+                    <p>Current team composition:</p>
+                    <ul class="bullet-list">
+                        <li>Mike Etuhoko</li>
+                        <li>RK</li>
+                        <li>Sanjay Gupta</li>
+                        <li>+2 more members</li>
+                    </ul>
+                    <p style="margin-top: 1rem; color: var(--text-light);">Assign algorithms and responsibilities clearly among these members.</p>
+                </div>
+            </section>
+
+            <!-- Timeline Section -->
+            <section id="timeline" class="section">
+                <div class="section-header">
+                    <h2>Suggested Timeline</h2>
+                    <p>Plan your work to meet the deadline</p>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Deadline: 26 Nov 2025, 11:59 PM (IST)</strong> - Submit 30 minutes before!
+                </div>
+
+                <div class="card">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Week 1: Planning & Research</div>
+                                <div class="timeline-date">Start immediately</div>
+                                <ul class="bullet-list">
+                                    <li>Group meeting: Select industry</li>
+                                    <li>Each member claims one algorithm</li>
+                                    <li>Begin researching use cases and sources</li>
+                                    <li>Collect 8-10 credible references</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Week 2: Individual Drafting</div>
+                                <div class="timeline-date">Days 8-14</div>
+                                <ul class="bullet-list">
+                                    <li>Each member writes first draft of their algorithm section</li>
+                                    <li>Follow the "good example" template</li>
+                                    <li>Include all required elements: business problem, data, KPIs, metrics, validation, risks</li>
+                                    <li>Share drafts with team for initial feedback</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Week 3: Integration & Common Sections</div>
+                                <div class="timeline-date">Days 15-21</div>
+                                <ul class="bullet-list">
+                                    <li>Write Industry & Data Landscape section</li>
+                                    <li>Create Cross-Algorithm Comparison tables</li>
+                                    <li>Integrate all algorithm sections</li>
+                                    <li>Ensure consistent formatting and tone</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Week 4: Individual Reflections & Polish</div>
+                                <div class="timeline-date">Days 22-28</div>
+                                <ul class="bullet-list">
+                                    <li>Each member writes 1-2 page reflection note</li>
+                                    <li>Write Executive Summary (do this last!)</li>
+                                    <li>Create Contribution Matrix</li>
+                                    <li>Proofread entire document</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Final Days: Review & Submit</div>
+                                <div class="timeline-date">2-3 days before deadline</div>
+                                <ul class="bullet-list">
+                                    <li>Full team review of complete document</li>
+                                    <li>Check all citations and references</li>
+                                    <li>Verify all appendices included</li>
+                                    <li>Convert to PDF format</li>
+                                    <li><strong>Submit 30 minutes before deadline!</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Time Management Tips</h3>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><strong>Set internal deadlines</strong> 2-3 days before actual deadline</li>
+                        <li><strong>Schedule regular check-ins</strong> (e.g., twice weekly) to monitor progress</li>
+                        <li><strong>Use collaboration tools</strong> (Google Docs, Notion) for real-time editing</li>
+                        <li><strong>Don't wait until the last minute</strong> for technical writing</li>
+                        <li><strong>Buffer time for iterations</strong> - first drafts always need improvement</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- GenAI Policy Section -->
+            <section id="genai" class="section">
+                <div class="section-header">
+                    <h2>GenAI Usage Policy</h2>
+                    <p>How to use AI tools responsibly</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">✓ You MAY Use GenAI For:</h3>
+                        <span class="badge badge-success">Permitted</span>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><strong>Discovery:</strong> Identifying potential use cases in your industry</li>
+                        <li><strong>Research:</strong> Finding relevant articles, reports, and case studies</li>
+                        <li><strong>Brainstorming:</strong> Generating ideas for algorithm applications</li>
+                        <li><strong>Outlining:</strong> Creating initial structure for your sections</li>
+                        <li><strong>Clarification:</strong> Understanding technical concepts better</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">✗ You MUST NOT:</h3>
+                        <span class="badge badge-danger">Prohibited</span>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><strong>Copy-paste raw AI output</strong> into your report</li>
+                        <li><strong>Submit AI-generated text</strong> without complete rewriting in your own words</li>
+                        <li><strong>Use AI facts without verification</strong> from independent credible sources</li>
+                        <li><strong>Skip the understanding step</strong> - you must be able to explain every sentence</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Best Practices</h3>
+                    </div>
+                    <ol class="bullet-list">
+                        <li><strong>Verify all facts</strong> with independent, credible sources</li>
+                        <li><strong>Cite your sources</strong> properly (not the AI tool, but the actual sources)</li>
+                        <li><strong>Write in your own language</strong> - your voice should be consistent throughout</li>
+                        <li><strong>Understand deeply</strong> - assume you must defend every sentence in class</li>
+                        <li><strong>Cross-check</strong> any statistics, case studies, or technical claims</li>
+                    </ol>
+
+                    <div class="alert alert-warning" style="margin-top: 1.5rem;">
+                        <strong>Remember:</strong> You are accountable for accuracy and coherence. If you cannot explain it in class, it should not be in your report.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Example of Proper GenAI Usage</h3>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 2px solid var(--success); border-radius: 8px; padding: 1.5rem; margin: 1rem 0;">
+                        <p><strong>Good approach:</strong></p>
+                        <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Ask AI: "What are common use cases for Random Forest in healthcare?"</li>
+                            <li>AI suggests: disease prediction, patient readmission, etc.</li>
+                            <li>You search for actual case studies: "Johns Hopkins random forest patient readmission"</li>
+                            <li>You find real published studies and industry reports</li>
+                            <li>You read and understand the actual methodology</li>
+                            <li>You write your section in your own words, citing the real sources</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #fef2f2; border: 2px solid var(--danger); border-radius: 8px; padding: 1.5rem; margin: 1rem 0;">
+                        <p><strong>Bad approach:</strong></p>
+                        <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Ask AI: "Write a section on Random Forest for healthcare"</li>
+                            <li>Copy-paste the AI output directly</li>
+                            <li>Submit without understanding or verification</li>
+                            <li>❌ This is not acceptable!</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+
+            // Close all accordions in the same parent
+            item.parentElement.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+
+            // Toggle current accordion
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Industry Selection
+        let selectedIndustry = null;
+        function selectIndustry(card) {
+            // Remove selection from all
+            document.querySelectorAll('.industry-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+
+            // Select current
+            card.classList.add('selected');
+            selectedIndustry = card.textContent.trim();
+        }
+
+        // Algorithm Selection
+        let selectedAlgorithms = [];
+        function selectAlgorithm(card) {
+            if (card.classList.contains('selected')) {
+                card.classList.remove('selected');
+                const algo = card.querySelector('div').textContent;
+                selectedAlgorithms = selectedAlgorithms.filter(a => a !== algo);
+            } else {
+                if (selectedAlgorithms.length < 5) {
+                    card.classList.add('selected');
+                    selectedAlgorithms.push(card.querySelector('div').textContent);
+                } else {
+                    alert('Maximum 5 algorithms can be selected (one per group member)');
+                }
+            }
+        }
+
+        // Auto-open first accordion in each section
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.section').forEach(section => {
+                const firstAccordion = section.querySelector('.accordion-item');
+                if (firstAccordion && !section.querySelector('.accordion-item.active')) {
+                    firstAccordion.classList.add('active');
+                }
+            });
+        });
+
+        // Print/Export functionality
+        function exportGuide() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
