@@ -89,7 +89,7 @@ timeline
 graph LR
     subgraph "Layer 1: Edges"
         E1[—] 
-        E2[/]
+        E2[ ]
         E3[|]
     end
     
