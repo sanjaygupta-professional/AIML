@@ -2,6 +2,32 @@
 
 This repository contains coursework and assignments for the AI & Machine Learning module of the Golden Gate University (GGU) PhD program in Emerging Technology.
 
+## 🎓 Learning Resources
+
+### [Comprehensive Learning Portal](learn.html) ⭐ NEW!
+
+**Interactive web application** for mastering all AI/ML topics with comprehensive markdown content, interactive diagrams, and progress tracking.
+
+**Features:**
+- 📚 All markdown learning materials in one place
+- 🎨 Interactive Mermaid diagrams
+- 📊 Progress tracking and bookmarks
+- 🌓 Dark/Light mode support
+- 🔍 Search functionality
+- 📱 Responsive design
+
+**Content Included:**
+- Visual Deep Learning Companion (comprehensive DL guide with philosophy & diagrams)
+- Operating Model DL Concepts Map
+- Concept Connection Visuals
+- Assignment guides and rubrics
+
+**Access:**
+- **Local:** Open [learn.html](learn.html) in your browser
+- **Live:** `https://sanjaygupta-professional.github.io/AIML/learn.html` (after enabling GitHub Pages)
+
+---
+
 ## 📂 Repository Structure
 
 ### [Assignment #2: AI/ML Algorithm Playbook](Assignment%232/)
@@ -32,6 +58,26 @@ This repository contains coursework and assignments for the AI & Machine Learnin
 - Sanjay Gupta
 - Additional team members
 
+## 🚀 Getting Started
+
+1. **Local Use:**
+   - Clone the repository
+   - Open `index.html` or `learn.html` in your browser
+   - No server required - everything runs client-side
+
+2. **GitHub Pages (Recommended):**
+   - Follow the [GitHub Pages Setup Guide](GITHUB_PAGES_SETUP.md)
+   - Access your site at `https://[username].github.io/AIML/`
+   - All interactive features work online
+
+## 📖 Learning Path
+
+**Recommended Order:**
+1. Start with the [Learning Portal](learn.html) to understand Deep Learning fundamentals
+2. Explore Operating Model concepts and their connections to DL
+3. Review [Assignment #2 Playbook](Assignment%232/index.html) for group project guidance
+4. Use progress tracking to monitor your learning journey
+
 ---
 
-**Last Updated:** November 6, 2025
+**Last Updated:** December 23, 2024

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML Learning Portal - GGU PhD</title>
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Mermaid for Diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-bg: #1e293b;
+            --dark-card: #334155;
+            --light-bg: #f8fafc;
+            --light-card: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --border-light: #e2e8f0;
+            --border-dark: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--light-bg);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .logo p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            min-width: 250px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            min-width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-icon:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            max-width: 1400px;
+            margin: 2rem auto;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--light-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        body.dark-mode .sidebar {
+            background: var(--dark-card);
+        }
+
+        .sidebar h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .topic-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .category-header:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .topic-list {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .topic-item {
+            padding: 0.6rem 0.8rem;
+            margin: 0.3rem 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .topic-item:hover {
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateX(4px);
+        }
+
+        .topic-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .topic-item i {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .topic-item.completed i {
+            color: var(--success-color);
+            opacity: 1;
+        }
+
+        .topic-item.active i {
+            opacity: 1;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--light-card);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-height: 600px;
+        }
+
+        body.dark-mode .main-content {
+            background: var(--dark-card);
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        body.dark-mode .content-header {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .content-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            background: var(--light-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        body.dark-mode .action-btn {
+            background: var(--dark-bg);
+            border-color: var(--border-dark);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Markdown Content Styling */
+        .markdown-content {
+            max-width: 100%;
+        }
+
+        .markdown-content h1 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+        }
+
+        .markdown-content h2 {
+            font-size: 1.75rem;
+            margin: 1.75rem 0 1rem;
+            color: var(--secondary-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        body.dark-mode .markdown-content h2 {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .markdown-content h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .markdown-content p {
+            margin: 1rem 0;
+            line-height: 1.8;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .markdown-content li {
+            margin: 0.5rem 0;
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .markdown-content code {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .markdown-content pre {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-content th,
+        .markdown-content td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-light);
+            text-align: left;
+        }
+
+        body.dark-mode .markdown-content th,
+        body.dark-mode .markdown-content td {
+            border-color: var(--border-dark);
+        }
+
+        .markdown-content th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .markdown-content tr:nth-child(even) {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Mermaid Diagrams */
+        .mermaid {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        body.dark-mode .mermaid {
+            background: var(--dark-bg);
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-screen h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .welcome-screen p {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        body.dark-mode .welcome-screen p {
+            color: var(--text-light);
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(139, 92, 246, 0.1));
+            padding: 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .topic-card i {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .topic-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .topic-card p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-light);
+        }
+
+        body.dark-mode .nav-buttons {
+            border-top-color: var(--border-dark);
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            .search-box input {
+                min-width: 200px;
+            }
+
+            .search-box input:focus {
+                min-width: 250px;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-4px);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <div>
+                    <h1>AI/ML Learning Portal</h1>
+                    <p>GGU PhD - Emerging Technology</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search topics...">
+                </div>
+                <button class="btn btn-icon" id="darkModeToggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn btn-icon" id="resetProgress" title="Reset Progress">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="progress-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong>Learning Progress</strong>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="completedCount">0 completed</span>
+                    <span id="totalCount">0 total</span>
+                </div>
+            </div>
+
+            <h2><i class="fas fa-book-open"></i> Topics</h2>
+            <div id="topicsList"></div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title" id="contentTitle">Welcome to AI/ML Learning Portal</h1>
+                <div class="content-actions">
+                    <button class="action-btn" id="bookmarkBtn" title="Bookmark">
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                    <button class="action-btn" id="markCompleteBtn" title="Mark as Complete">
+                        <i class="far fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="content" class="markdown-content"></div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <button class="nav-btn" id="nextBtn">
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+
+        // Topics Data Structure
+        const topics = {
+            'Deep Learning Fundamentals': [
+                {
+                    title: 'Visual Deep Learning Companion',
+                    file: 'Assignment#1ProblemStatatementConnectionToConcepts/Visual_Deep_Learning_Companion.md',
+                    icon: 'fa-brain'
+                }
+            ],
+            'Operating Models & DL Concepts': [
+                {
+                    title: 'Operating Model DL Concepts Map',
+                    file: 'Assignment#1OperatingModelSelectionProblemSolution/Operating_Model_DL_Concepts_Map.md',
+                    icon: 'fa-project-diagram'
+                },
+                {
+                    title: 'Concept Connection Visual',
+                    file: 'Assignment#1OperatingModelSelectionProblemSolution/Concept_Connection_Visual.md',
+                    icon: 'fa-sitemap'
+                },
+                {
+                    title: 'Assignment Rubric Evaluation',
+                    file: 'Assignment#1OperatingModelSelectionProblemSolution/Assignment_Rubric_Evaluation.md',
+                    icon: 'fa-clipboard-check'
+                }
+            ],
+            'Assignments & Projects': [
+                {
+                    title: 'Assignment #2 - Algorithm Playbook',
+                    file: 'Assignment#2/README.md',
+                    icon: 'fa-book'
+                }
+            ]
+        };
+
+        // State Management
+        let currentTopicIndex = -1;
+        let allTopics = [];
+        let completedTopics = new Set();
+        let bookmarkedTopics = new Set();
+        let isDarkMode = false;
+
+        // Flatten topics for easy navigation
+        Object.keys(topics).forEach(category => {
+            topics[category].forEach(topic => {
+                allTopics.push({ ...topic, category });
+            });
+        });
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('learningProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                completedTopics = new Set(data.completed || []);
+                bookmarkedTopics = new Set(data.bookmarked || []);
+                isDarkMode = data.darkMode || false;
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+            updateProgress();
+        }
+
+        // Save progress
+        function saveProgress() {
+            const data = {
+                completed: Array.from(completedTopics),
+                bookmarked: Array.from(bookmarkedTopics),
+                darkMode: isDarkMode
+            };
+            localStorage.setItem('learningProgress', JSON.stringify(data));
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const total = allTopics.length;
+            const completed = completedTopics.size;
+            const percent = Math.round((completed / total) * 100);
+
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressPercent').textContent = `${percent}%`;
+            document.getElementById('completedCount').textContent = `${completed} completed`;
+            document.getElementById('totalCount').textContent = `${total} total`;
+        }
+
+        // Render sidebar topics
+        function renderTopics() {
+            const container = document.getElementById('topicsList');
+            container.innerHTML = '';
+
+            Object.keys(topics).forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'topic-category';
+
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `<i class="fas fa-folder"></i> ${category}`;
+                categoryDiv.appendChild(header);
+
+                const list = document.createElement('ul');
+                list.className = 'topic-list';
+
+                topics[category].forEach((topic, index) => {
+                    const globalIndex = allTopics.findIndex(t => t.title === topic.title);
+                    const item = document.createElement('li');
+                    item.className = 'topic-item';
+                    if (completedTopics.has(topic.title)) {
+                        item.classList.add('completed');
+                    }
+                    if (currentTopicIndex === globalIndex) {
+                        item.classList.add('active');
+                    }
+
+                    const icon = completedTopics.has(topic.title) ?
+                        'fa-check-circle' : 'fa-circle';
+
+                    item.innerHTML = `
+                        <i class="fas ${icon}"></i>
+                        ${topic.title}
+                    `;
+
+                    item.onclick = () => loadTopic(globalIndex);
+                    list.appendChild(item);
+                });
+
+                categoryDiv.appendChild(list);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        // Load markdown file and render
+        async function loadTopic(index) {
+            if (index < 0 || index >= allTopics.length) {
+                showWelcomeScreen();
+                return;
+            }
+
+            currentTopicIndex = index;
+            const topic = allTopics[index];
+
+            // Update UI
+            document.getElementById('contentTitle').textContent = topic.title;
+            const content = document.getElementById('content');
+            content.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i></div>';
+
+            // Update bookmark button
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            if (bookmarkedTopics.has(topic.title)) {
+                bookmarkBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+            } else {
+                bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i>';
+            }
+
+            // Update complete button
+            const completeBtn = document.getElementById('markCompleteBtn');
+            if (completedTopics.has(topic.title)) {
+                completeBtn.innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else {
+                completeBtn.innerHTML = '<i class="far fa-check-circle"></i>';
+            }
+
+            try {
+                const response = await fetch(topic.file);
+                const markdown = await response.text();
+
+                // Parse markdown
+                const html = marked.parse(markdown);
+                content.innerHTML = html;
+
+                // Render mermaid diagrams
+                const mermaidElements = content.querySelectorAll('code.language-mermaid');
+                mermaidElements.forEach((element, i) => {
+                    const code = element.textContent;
+                    const container = document.createElement('div');
+                    container.className = 'mermaid';
+                    container.textContent = code;
+                    element.parentElement.replaceWith(container);
+                });
+
+                // Render all mermaid diagrams
+                await mermaid.run({
+                    querySelector: '.mermaid'
+                });
+
+            } catch (error) {
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 3rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--warning-color);"></i>
+                        <h2 style="margin-top: 1rem;">Content Not Found</h2>
+                        <p>Sorry, we couldn't load this topic. Please try another one.</p>
+                    </div>
+                `;
+            }
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === allTopics.length - 1;
+
+            renderTopics();
+            window.scrollTo(0, 0);
+        }
+
+        // Show welcome screen
+        function showWelcomeScreen() {
+            currentTopicIndex = -1;
+            document.getElementById('contentTitle').textContent = 'Welcome to AI/ML Learning Portal';
+
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="welcome-screen">
+                    <div class="welcome-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2>Master AI & Machine Learning</h2>
+                    <p>Explore comprehensive learning materials on Deep Learning, Neural Networks, and AI applications. Track your progress as you learn!</p>
+
+                    <div class="topic-grid">
+                        <div class="topic-card" onclick="loadTopic(0)">
+                            <i class="fas fa-brain"></i>
+                            <h3>Deep Learning</h3>
+                            <p>Comprehensive guide to neural networks and deep learning concepts</p>
+                        </div>
+                        <div class="topic-card" onclick="loadTopic(1)">
+                            <i class="fas fa-project-diagram"></i>
+                            <h3>Operating Models</h3>
+                            <p>Apply DL concepts to real-world operating model selection</p>
+                        </div>
+                        <div class="topic-card" onclick="loadTopic(${allTopics.length - 1})">
+                            <i class="fas fa-book"></i>
+                            <h3>Assignments</h3>
+                            <p>Course assignments and project guidelines</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('prevBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = false;
+            renderTopics();
+        }
+
+        // Event Listeners
+        document.getElementById('prevBtn').onclick = () => {
+            if (currentTopicIndex > 0) {
+                loadTopic(currentTopicIndex - 1);
+            }
+        };
+
+        document.getElementById('nextBtn').onclick = () => {
+            if (currentTopicIndex < allTopics.length - 1) {
+                loadTopic(currentTopicIndex + 1);
+            } else if (currentTopicIndex === -1) {
+                loadTopic(0);
+            }
+        };
+
+        document.getElementById('markCompleteBtn').onclick = () => {
+            if (currentTopicIndex >= 0) {
+                const topic = allTopics[currentTopicIndex];
+                if (completedTopics.has(topic.title)) {
+                    completedTopics.delete(topic.title);
+                } else {
+                    completedTopics.add(topic.title);
+                }
+                saveProgress();
+                updateProgress();
+                loadTopic(currentTopicIndex);
+            }
+        };
+
+        document.getElementById('bookmarkBtn').onclick = () => {
+            if (currentTopicIndex >= 0) {
+                const topic = allTopics[currentTopicIndex];
+                if (bookmarkedTopics.has(topic.title)) {
+                    bookmarkedTopics.delete(topic.title);
+                } else {
+                    bookmarkedTopics.add(topic.title);
+                }
+                saveProgress();
+                loadTopic(currentTopicIndex);
+            }
+        };
+
+        document.getElementById('darkModeToggle').onclick = () => {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode');
+            const icon = isDarkMode ? 'fa-sun' : 'fa-moon';
+            document.getElementById('darkModeToggle').innerHTML = `<i class="fas ${icon}"></i>`;
+            saveProgress();
+        };
+
+        document.getElementById('resetProgress').onclick = () => {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                completedTopics.clear();
+                bookmarkedTopics.clear();
+                saveProgress();
+                updateProgress();
+                renderTopics();
+            }
+        };
+
+        // Search functionality
+        document.getElementById('searchInput').oninput = (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.topic-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        };
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.onscroll = () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        };
+
+        scrollTopBtn.onclick = () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Initialize
+        loadProgress();
+        showWelcomeScreen();
+    </script>
+</body>
+</html>
