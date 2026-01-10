@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Startup Ideas Curator - 2024-2025 Trends</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats-bar {
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .controls {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .idea-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .idea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .cat-healthcare { background: #10b981; color: white; }
+        .cat-finance { background: #f59e0b; color: white; }
+        .cat-education { background: #3b82f6; color: white; }
+        .cat-retail { background: #ec4899; color: white; }
+        .cat-manufacturing { background: #8b5cf6; color: white; }
+        .cat-agriculture { background: #84cc16; color: white; }
+        .cat-logistics { background: #06b6d4; color: white; }
+        .cat-legal { background: #6366f1; color: white; }
+        .cat-marketing { background: #f97316; color: white; }
+        .cat-cybersecurity { background: #dc2626; color: white; }
+        .cat-realestate { background: #14b8a6; color: white; }
+
+        .idea-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            padding-right: 100px;
+        }
+
+        .idea-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .idea-market {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .idea-market strong {
+            color: var(--accent);
+        }
+
+        .idea-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            padding: 0.35rem 0.75rem;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .sources {
+            max-width: 800px;
+            margin: 2rem auto 0;
+            padding: 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+        }
+
+        .sources h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .sources a {
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-bar {
+                gap: 1.5rem;
+            }
+
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 AI Startup Ideas Curator</h1>
+        <p>Curated AI-based startup opportunities across industries from the last 12 months (2024-2025)</p>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-value">$202.3B</div>
+            <div class="stat-label">Global AI Funding (2025)</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">214+</div>
+            <div class="stat-label">AI Unicorns Worldwide</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">50%</div>
+            <div class="stat-label">Share of Global Funding</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">11</div>
+            <div class="stat-label">Industry Categories</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search startup ideas...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="healthcare">Healthcare</button>
+                <button class="filter-btn" data-category="finance">Finance</button>
+                <button class="filter-btn" data-category="education">Education</button>
+                <button class="filter-btn" data-category="retail">Retail</button>
+                <button class="filter-btn" data-category="manufacturing">Manufacturing</button>
+                <button class="filter-btn" data-category="agriculture">Agriculture</button>
+                <button class="filter-btn" data-category="logistics">Logistics</button>
+                <button class="filter-btn" data-category="legal">Legal Tech</button>
+                <button class="filter-btn" data-category="marketing">Marketing</button>
+                <button class="filter-btn" data-category="cybersecurity">Cybersecurity</button>
+                <button class="filter-btn" data-category="realestate">Real Estate</button>
+            </div>
+        </div>
+
+        <div class="ideas-grid" id="ideasGrid">
+            <!-- Healthcare Ideas -->
+            <div class="idea-card" data-category="healthcare">
+                <span class="category-badge cat-healthcare">Healthcare</span>
+                <h3 class="idea-title">AI-Powered Medical Diagnostics</h3>
+                <p class="idea-description">Develop AI systems for early disease detection, medical imaging analysis, and diagnostic support. Healthcare diagnostics is one of the fastest-growing AI segments with proven ROI.</p>
+                <div class="idea-market">
+                    <strong>Market Size:</strong> $10.7B invested in AI health tech (2025), up 24.4% from 2024
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">Deep Learning</span>
+                    <span class="tag">Radiology</span>
+                    <span class="tag">Early Detection</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="healthcare">
+                <span class="category-badge cat-healthcare">Healthcare</span>
+                <h3 class="idea-title">Virtual AI Health & Wellness Coach</h3>
+                <p class="idea-description">Personalized AI coaching platforms providing tailored health, nutrition, and fitness guidance. Integrates with wearables and health data for real-time recommendations.</p>
+                <div class="idea-market">
+                    <strong>Growth Rate:</strong> Healthcare AI adoption is 2.2x faster than broader economy
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Personalization</span>
+                    <span class="tag">IoT Integration</span>
+                    <span class="tag">Wellness</span>
+                    <span class="tag">Preventive Care</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="healthcare">
+                <span class="category-badge cat-healthcare">Healthcare</span>
+                <h3 class="idea-title">Medical Documentation & RCM Automation</h3>
+                <p class="idea-description">Automate medical documentation and revenue cycle management (RCM) for healthcare providers. This segment represents nearly 60% of all healthcare IT spending.</p>
+                <div class="idea-market">
+                    <strong>Opportunity:</strong> 60% of healthcare IT spending goes to documentation & RCM
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">NLP</span>
+                    <span class="tag">Automation</span>
+                    <span class="tag">Back-Office</span>
+                    <span class="tag">Billing</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="healthcare">
+                <span class="category-badge cat-healthcare">Healthcare</span>
+                <h3 class="idea-title">AI-Driven Drug Discovery</h3>
+                <p class="idea-description">Accelerate pharmaceutical research using AI to predict drug interactions, optimize molecular structures, and identify promising compounds faster than traditional methods.</p>
+                <div class="idea-market">
+                    <strong>Impact:</strong> Reduce drug discovery time from 10+ years to 2-3 years
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Biotech</span>
+                    <span class="tag">ML Models</span>
+                    <span class="tag">Molecular Analysis</span>
+                    <span class="tag">Research</span>
+                </div>
+            </div>
+
+            <!-- Finance Ideas -->
+            <div class="idea-card" data-category="finance">
+                <span class="category-badge cat-finance">Finance</span>
+                <h3 class="idea-title">AI Fraud Detection System</h3>
+                <p class="idea-description">Real-time transaction monitoring with AI that identifies suspicious patterns and adapts to new fraud techniques through continuous learning. Essential for financial institutions.</p>
+                <div class="idea-market">
+                    <strong>Potential GVA:</strong> $1.2T extra value for financial sector by 2035
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Anomaly Detection</span>
+                    <span class="tag">Real-time</span>
+                    <span class="tag">Pattern Recognition</span>
+                    <span class="tag">Security</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="finance">
+                <span class="category-badge cat-finance">Finance</span>
+                <h3 class="idea-title">Banking Process Automation</h3>
+                <p class="idea-description">Automate banking operations including loan processing, customer onboarding, compliance checks, and reporting. 43% of banking processes can be automated.</p>
+                <div class="idea-market">
+                    <strong>Cost Savings:</strong> Over $1M per institution through automation
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">RPA</span>
+                    <span class="tag">Compliance</span>
+                    <span class="tag">Process Mining</span>
+                    <span class="tag">KYC</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="finance">
+                <span class="category-badge cat-finance">Finance</span>
+                <h3 class="idea-title">AI Accounting & Bookkeeping Platform</h3>
+                <p class="idea-description">Automated accounting systems that categorize transactions, generate reports, predict cash flow, and identify tax optimization opportunities for SMBs.</p>
+                <div class="idea-market">
+                    <strong>Target Market:</strong> 33M+ small businesses in US alone
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">FinTech</span>
+                    <span class="tag">SMB Focus</span>
+                    <span class="tag">Tax Optimization</span>
+                    <span class="tag">Cash Flow</span>
+                </div>
+            </div>
+
+            <!-- Education Ideas -->
+            <div class="idea-card" data-category="education">
+                <span class="category-badge cat-education">Education</span>
+                <h3 class="idea-title">Personalized AI Tutoring Platform</h3>
+                <p class="idea-description">Adaptive learning platform that adjusts lessons in real-time based on student performance. Covers test prep, language learning, coding, and K-12 subjects.</p>
+                <div class="idea-market">
+                    <strong>Performance Impact:</strong> Up to 30% improvement in academic performance
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Adaptive Learning</span>
+                    <span class="tag">EdTech</span>
+                    <span class="tag">Assessment</span>
+                    <span class="tag">K-12</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="education">
+                <span class="category-badge cat-education">Education</span>
+                <h3 class="idea-title">AI-Powered Course Creation Studio</h3>
+                <p class="idea-description">Help educators and content creators build courses faster with AI-generated curricula, assessments, video scripts, and interactive content tailored to learning objectives.</p>
+                <div class="idea-market">
+                    <strong>Market:</strong> $340B global e-learning market by 2025
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Content Generation</span>
+                    <span class="tag">Curriculum Design</span>
+                    <span class="tag">LMS Integration</span>
+                    <span class="tag">Assessment</span>
+                </div>
+            </div>
+
+            <!-- Retail Ideas -->
+            <div class="idea-card" data-category="retail">
+                <span class="category-badge cat-retail">Retail</span>
+                <h3 class="idea-title">Smart Inventory Management System</h3>
+                <p class="idea-description">AI algorithms process historical sales data and external factors to predict demand accurately, optimizing inventory levels to prevent stockouts and overstock situations.</p>
+                <div class="idea-market">
+                    <strong>Cost Reduction:</strong> 20-50% reduction in inventory carrying costs
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Demand Forecasting</span>
+                    <span class="tag">Supply Chain</span>
+                    <span class="tag">Optimization</span>
+                    <span class="tag">Retail Analytics</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="retail">
+                <span class="category-badge cat-retail">Retail</span>
+                <h3 class="idea-title">Cashierless Checkout Technology</h3>
+                <p class="idea-description">Deploy AI-powered sensors and computer vision to enable walk-out shopping experiences without traditional checkouts, reducing labor costs and improving customer experience.</p>
+                <div class="idea-market">
+                    <strong>Trend:</strong> Following Amazon Go's success, expanding to more retailers
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">Sensor Fusion</span>
+                    <span class="tag">Retail Innovation</span>
+                    <span class="tag">CX</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="retail">
+                <span class="category-badge cat-retail">Retail</span>
+                <h3 class="idea-title">Emotion AI for Retail Optimization</h3>
+                <p class="idea-description">Track shopper expressions and voice sentiment to optimize store displays, product placement, and staffing levels based on real-time customer emotions and engagement.</p>
+                <div class="idea-market">
+                    <strong>ROI:</strong> 10-15% increase in conversion rates through optimization
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Emotion Recognition</span>
+                    <span class="tag">Sentiment Analysis</span>
+                    <span class="tag">Store Analytics</span>
+                    <span class="tag">CX Optimization</span>
+                </div>
+            </div>
+
+            <!-- Manufacturing Ideas -->
+            <div class="idea-card" data-category="manufacturing">
+                <span class="category-badge cat-manufacturing">Manufacturing</span>
+                <h3 class="idea-title">AI-Powered Robotics for Assembly</h3>
+                <p class="idea-description">Automated robots handling assembly, welding, quality inspection with high precision. Adaptable to various manufacturing environments and production lines.</p>
+                <div class="idea-market">
+                    <strong>Market Growth:</strong> $20B+ industrial robotics market by 2026
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Industrial Automation</span>
+                    <span class="tag">Robotics</span>
+                    <span class="tag">Quality Control</span>
+                    <span class="tag">Industry 4.0</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="manufacturing">
+                <span class="category-badge cat-manufacturing">Manufacturing</span>
+                <h3 class="idea-title">Digital Twin for Manufacturing</h3>
+                <p class="idea-description">Create virtual replicas of production lines using AI, simulation engines, and spatial computing for real-time optimization, predictive maintenance, and scenario planning.</p>
+                <div class="idea-market">
+                    <strong>Efficiency Gains:</strong> 20-30% improvement in operational efficiency
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Digital Twin</span>
+                    <span class="tag">Simulation</span>
+                    <span class="tag">IoT</span>
+                    <span class="tag">Predictive Maintenance</span>
+                </div>
+            </div>
+
+            <!-- Agriculture Ideas -->
+            <div class="idea-card" data-category="agriculture">
+                <span class="category-badge cat-agriculture">Agriculture</span>
+                <h3 class="idea-title">Precision Agriculture Platform</h3>
+                <p class="idea-description">Transform farming using AI, IoT, and ML for drought detection, crop health monitoring, and smart tractors that identify diseased plants. Addresses climate change and labor shortages.</p>
+                <div class="idea-market">
+                    <strong>Market Size:</strong> $12.9B precision agriculture market by 2027
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">IoT Sensors</span>
+                    <span class="tag">Crop Monitoring</span>
+                    <span class="tag">Sustainability</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="agriculture">
+                <span class="category-badge cat-agriculture">Agriculture</span>
+                <h3 class="idea-title">AI Soil & Weather Analytics</h3>
+                <p class="idea-description">Monitor soil health, identify weather-enabled hazards, and provide actionable insights for crop management using satellite imagery, sensors, and predictive models.</p>
+                <div class="idea-market">
+                    <strong>Impact:</strong> 15-25% increase in crop yields through optimization
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Satellite Imagery</span>
+                    <span class="tag">Predictive Analytics</span>
+                    <span class="tag">Climate Tech</span>
+                    <span class="tag">AgTech</span>
+                </div>
+            </div>
+
+            <!-- Logistics Ideas -->
+            <div class="idea-card" data-category="logistics">
+                <span class="category-badge cat-logistics">Logistics</span>
+                <h3 class="idea-title">AI Route Optimization Platform</h3>
+                <p class="idea-description">Dynamic route planning that adjusts deliveries based on real-time traffic, weather, and schedules. Reduces fuel costs, delivery times, and carbon footprint.</p>
+                <div class="idea-market">
+                    <strong>Market Size:</strong> $20.2B AI supply chain market by 2028 (45.3% CAGR)
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Route Optimization</span>
+                    <span class="tag">Fleet Management</span>
+                    <span class="tag">Last Mile</span>
+                    <span class="tag">Real-time Data</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="logistics">
+                <span class="category-badge cat-logistics">Logistics</span>
+                <h3 class="idea-title">Supply Chain Intelligence SaaS</h3>
+                <p class="idea-description">Platform for manufacturers to forecast optimal reorder windows with logistics dashboards that overlay shipping delays with demand spikes for proactive decision-making.</p>
+                <div class="idea-market">
+                    <strong>Cost Savings:</strong> 15-30% reduction in supply chain costs
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Demand Forecasting</span>
+                    <span class="tag">SaaS</span>
+                    <span class="tag">Analytics</span>
+                    <span class="tag">Inventory Planning</span>
+                </div>
+            </div>
+
+            <!-- Legal Tech Ideas -->
+            <div class="idea-card" data-category="legal">
+                <span class="category-badge cat-legal">Legal Tech</span>
+                <h3 class="idea-title">AI Legal Document Analysis</h3>
+                <p class="idea-description">Automate document review, contract analysis, and compliance checks. Legal professionals spend 48% of time on document review—work that AI excels at.</p>
+                <div class="idea-market">
+                    <strong>Market Size:</strong> Part of $1.2B+ vertical AI legal sector
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">NLP</span>
+                    <span class="tag">Contract Analysis</span>
+                    <span class="tag">Compliance</span>
+                    <span class="tag">Due Diligence</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="legal">
+                <span class="category-badge cat-legal">Legal Tech</span>
+                <h3 class="idea-title">AI Contract Drafting Assistant</h3>
+                <p class="idea-description">Help legal teams draft and review contracts directly in their workflow (e.g., Microsoft Word integration). Suggests clauses, identifies risks, and ensures compliance.</p>
+                <div class="idea-market">
+                    <strong>Time Savings:</strong> 60-70% reduction in contract drafting time
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Legal AI</span>
+                    <span class="tag">Contract Management</span>
+                    <span class="tag">Risk Assessment</span>
+                    <span class="tag">Workflow Integration</span>
+                </div>
+            </div>
+
+            <!-- Marketing Ideas -->
+            <div class="idea-card" data-category="marketing">
+                <span class="category-badge cat-marketing">Marketing</span>
+                <h3 class="idea-title">AI Marketing Campaign Optimizer</h3>
+                <p class="idea-description">Generate ad copy, segment audiences, and optimize campaigns in real-time. Blend AI automation with creative strategy for maximum impact and ROI.</p>
+                <div class="idea-market">
+                    <strong>ROI:</strong> 200-300% improvement in campaign performance
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Ad Tech</span>
+                    <span class="tag">Audience Segmentation</span>
+                    <span class="tag">A/B Testing</span>
+                    <span class="tag">Performance Marketing</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="marketing">
+                <span class="category-badge cat-marketing">Marketing</span>
+                <h3 class="idea-title">AI Content Studio for Scale</h3>
+                <p class="idea-description">Produce blogs, videos, and social posts at scale for specific niches like SaaS or real estate. Content drives inbound growth but volume is overwhelming for most businesses.</p>
+                <div class="idea-market">
+                    <strong>Demand:</strong> 70% of marketers actively creating more content in 2025
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Content Generation</span>
+                    <span class="tag">SEO</span>
+                    <span class="tag">Video Creation</span>
+                    <span class="tag">Social Media</span>
+                </div>
+            </div>
+
+            <!-- Cybersecurity Ideas -->
+            <div class="idea-card" data-category="cybersecurity">
+                <span class="category-badge cat-cybersecurity">Cybersecurity</span>
+                <h3 class="idea-title">AI Threat Detection & Response</h3>
+                <p class="idea-description">Real-time monitoring and anomaly detection to identify cyber threats faster than humans. Use ML to adapt to evolving attack patterns and automate incident response.</p>
+                <div class="idea-market">
+                    <strong>Market Growth:</strong> $22.4B in 2024 to $60.6B by 2028
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Threat Intelligence</span>
+                    <span class="tag">SIEM</span>
+                    <span class="tag">Anomaly Detection</span>
+                    <span class="tag">SOC Automation</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="cybersecurity">
+                <span class="category-badge cat-cybersecurity">Cybersecurity</span>
+                <h3 class="idea-title">AI Security Consulting Service</h3>
+                <p class="idea-description">Leverage AI tools to provide cybersecurity assessments, vulnerability scanning, and risk mitigation strategies. Consultants using AI can command premium fees.</p>
+                <div class="idea-market">
+                    <strong>Fee Premium:</strong> 40-60% higher rates for AI-enhanced consulting
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Consulting</span>
+                    <span class="tag">Risk Assessment</span>
+                    <span class="tag">Vulnerability Scanning</span>
+                    <span class="tag">Compliance</span>
+                </div>
+            </div>
+
+            <!-- Real Estate Ideas -->
+            <div class="idea-card" data-category="realestate">
+                <span class="category-badge cat-realestate">Real Estate</span>
+                <h3 class="idea-title">AI Property Listing Generator</h3>
+                <p class="idea-description">Generate compelling listing descriptions, virtually stage properties, and analyze comparable sales. Help agents and brokers close deals faster with AI-powered tools.</p>
+                <div class="idea-market">
+                    <strong>Market Size:</strong> $1.9B AI real estate market by 2026
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">PropTech</span>
+                    <span class="tag">Virtual Staging</span>
+                    <span class="tag">Content Generation</span>
+                    <span class="tag">Comp Analysis</span>
+                </div>
+            </div>
+
+            <div class="idea-card" data-category="realestate">
+                <span class="category-badge cat-realestate">Real Estate</span>
+                <h3 class="idea-title">AI Property Valuation Platform</h3>
+                <p class="idea-description">Automated property valuation using ML models trained on millions of transactions, property features, and market trends. Instant, accurate valuations for buyers, sellers, and investors.</p>
+                <div class="idea-market">
+                    <strong>Accuracy:</strong> Within 5% of professional appraisals for 85% of properties
+                </div>
+                <div class="idea-tags">
+                    <span class="tag">Valuation Models</span>
+                    <span class="tag">Market Analysis</span>
+                    <span class="tag">Investment Tools</span>
+                    <span class="tag">Data Analytics</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            No startup ideas match your search. Try different keywords or filters.
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 AI Startup Ideas Curator | Data compiled from industry research and market analysis</p>
+        <p>Last Updated: January 2026 | Covering trends from 2024-2025</p>
+
+        <div class="sources">
+            <h3>📚 Research Sources</h3>
+            <a href="https://www.cbinsights.com/research/report/artificial-intelligence-top-startups-2025/" target="_blank">→ CB Insights: AI 100 Top Startups 2025</a>
+            <a href="https://news.crunchbase.com/ai/big-funding-trends-charts-eoy-2025/" target="_blank">→ Crunchbase: Big AI Funding Trends 2025</a>
+            <a href="https://news.crunchbase.com/health-wellness-biotech/ai-healthcare-funding-rises-2025/" target="_blank">→ Crunchbase: AI Healthcare Funding 2025</a>
+            <a href="https://www.articsledge.com/post/ai-startup-ideas" target="_blank">→ Articsledge: 17 Profitable AI Startup Ideas 2025</a>
+            <a href="https://www.hostinger.com/tutorials/ai-business-ideas" target="_blank">→ Hostinger: 25 Best AI Business Ideas 2025</a>
+            <a href="https://www.coherentsolutions.com/insights/ai-adoption-trends-you-should-not-miss-2025" target="_blank">→ Coherent Solutions: AI Adoption Trends 2025</a>
+            <a href="https://www.startupblink.com/blog/top-ai-startups/" target="_blank">→ StartupBlink: Top AI Startups 2025</a>
+            <a href="https://codevian.com/blog/ai-startup-ideas/" target="_blank">→ Codevian: 259+ AI Startup Ideas</a>
+        </div>
+    </div>
+
+    <script>
+        // Search and Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const ideaCards = document.querySelectorAll('.idea-card');
+        const noResults = document.getElementById('noResults');
+
+        let currentFilter = 'all';
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filterIdeas(searchTerm, currentFilter);
+        });
+
+        // Filter buttons
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.category;
+                const searchTerm = searchInput.value.toLowerCase();
+                filterIdeas(searchTerm, currentFilter);
+            });
+        });
+
+        function filterIdeas(searchTerm, category) {
+            let visibleCount = 0;
+
+            ideaCards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                const cardText = card.textContent.toLowerCase();
+
+                const matchesSearch = cardText.includes(searchTerm);
+                const matchesCategory = category === 'all' || cardCategory === category;
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
